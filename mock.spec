@@ -1,3 +1,5 @@
+%define _buildid .1
+
 # next four lines substituted by autoconf
 %define major 1
 %define minor 1
@@ -14,7 +16,7 @@
 Summary: Builds packages inside chroots
 Name: mock
 Version: %{release_version}
-Release: 1%{?dist}
+Release: 1%{?_buildid}%{?dist}
 License: GPLv2+
 Group: Development/Tools
 Source: https://git.fedorahosted.org/cgit/mock.git/snapshot/%{name}-%{version}.tar.xz
@@ -29,6 +31,8 @@ Requires(post): coreutils
 Requires(post): %{_sbindir}/update-alternatives
 Requires(preun): %{_sbindir}/update-alternatives
 BuildRequires: python-devel, autoconf, automake
+
+# bash-completion package is not yet available in AL/LL
 %if 0%{?fedora} || 0%{?rhel} > 6
 BuildRequires: bash-completion
 %endif
