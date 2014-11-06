@@ -26,6 +26,8 @@ Requires: createrepo_c
 Requires: pyliblzma
 Requires(pre): shadow-utils
 Requires(post): coreutils
+Requires(post): %{_sbindir}/update-alternatives
+Requires(preun): %{_sbindir}/update-alternatives
 BuildRequires: python-devel, autoconf, automake
 %if 0%{?fedora} || 0%{?rhel} > 6
 BuildRequires: bash-completion
@@ -113,22 +115,32 @@ exit 0
 # fix cache permissions from old installs
 chmod 2775 /var/cache/mock
 
-if [ -e /etc/fedora-release ]
-then
-    if grep -Fq Rawhide /etc/fedora-release; then
-        ver=rawhide
-    else
-        ver=$(rpm -q --nosignature --qf "%{VERSION}" --whatprovides fedora-release)
-    fi
-else
-    ver=$(rpm -q --nosignature --qf "%{VERSION}" --whatprovides redhat-release | cut -d. -f1 | grep -o '[0-9]\+')
-fi
-
+#
+# We give higher priority to Amazon Linux
+#
 rm -f %{_sysconfdir}/%{name}/default.cfg
-cfg=%{?fedora:fedora}%{?rhel:epel}-$ver-$(uname -i).cfg
-[ -e %{_sysconfdir}/%{name}/$cfg ] || exit -2
-ln -s -f $cfg %{_sysconfdir}/%{name}/default.cfg
-:
+
+%{_sbindir}/update-alternatives \
+  --install %{_sysconfdir}/%{name}/default.cfg \
+  mock-default.cfg \
+  %{_sysconfdir}/%{name}/ll-latest-x86_64.cfg 10
+
+%{_sbindir}/update-alternatives \
+  --install %{_sysconfdir}/%{name}/default.cfg \
+  mock-default.cfg \
+  %{_sysconfdir}/%{name}/amzn-latest-x86_64.cfg 20
+
+%preun
+
+if [ $1 -eq 0 ]; then
+    %{_sbindir}/update-alternatives \
+      --remove mock-default.cfg \
+      %{_sysconfdir}/%{name}/ll-latest-x86_64.cfg
+
+    %{_sbindir}/update-alternatives \
+      --remove mock-default.cfg \
+      %{_sysconfdir}/%{name}/amzn-latest-x86_64.cfg
+fi
 
 %files -f %{name}.cfgs
 %defattr(-, root, root)
