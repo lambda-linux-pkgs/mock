@@ -32,6 +32,9 @@ BuildRequires: bash-completion
 %endif
 
 %description
+For package support, please visit
+https://github.com/lambda-linux-pkgs/%{name}/issues
+
 Mock takes an SRPM and builds it in a chroot.
 
 %package scm
@@ -40,6 +43,9 @@ Summary: Mock SCM integration module
 Requires: mock = %{version}-%{release}, cvs, git, subversion, tar
 
 %description scm
+For package support, please visit
+https://github.com/lambda-linux-pkgs/%{name}/issues
+
 Mock SCM integration module.
 
 %prep
