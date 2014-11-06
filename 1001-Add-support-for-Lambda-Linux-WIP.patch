@@ -1,0 +1,61 @@
+From 8417922b4022a888e9938e9b54230ac178ef4f35 Mon Sep 17 00:00:00 2001
+From: Rajiv M Ranganath <rajiv.ranganath@atihita.com>
+Date: Fri, 24 Oct 2014 02:26:55 +0000
+Subject: [PATCH 1/2] Add support for Lambda Linux WIP
+
+---
+ etc/mock/ll-latest-x86_64.cfg |   42 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 42 insertions(+), 0 deletions(-)
+ create mode 100644 etc/mock/ll-latest-x86_64.cfg
+
+diff --git a/etc/mock/ll-latest-x86_64.cfg b/etc/mock/ll-latest-x86_64.cfg
+new file mode 100644
+index 0000000..36ea0de
+--- /dev/null
++++ b/etc/mock/ll-latest-x86_64.cfg
+@@ -0,0 +1,42 @@
++config_opts['root'] = 'll-latest-x86_64'
++config_opts['target_arch'] = 'x86_64'
++config_opts['legal_host_arches'] = ('x86_64',)
++config_opts['chroot_setup_cmd'] = 'install bash bzip2 coreutils cpio diffutils findutils gawk gcc gcc-c++ grep gzip info make patch system-release system-rpm-config rpm-build sed shadow-utils tar unzip util-linux-ng which xz pkgconfig yum-utils'
++config_opts['dist'] = 'll'  # only useful for --resultdir variable subst
++
++config_opts['yum.conf'] = """
++[main]
++cachedir=/var/cache/yum
++debuglevel=1
++reposdir=/dev/null
++logfile=/var/log/yum.log
++retries=20
++obsoletes=1
++gpgcheck=0
++assumeyes=1
++syslog_ident=mock
++syslog_device=
++
++# repos
++[ll-main]
++name=ll-main-Base
++enabled=1
++baseurl=http://192.168.0.35/amzn-buildroot-wip/ll-main
++failovermethod=priority
++
++[upstream-amzn-main]
++name=upstream-amzn-main-Base
++enabled=1
++baseurl=http://192.168.0.35/amzn-buildroot-wip/amzn-main
++failovermethod=priority
++
++[upstream-amzn-updates]
++name=upstream-amzn-updates-Base
++enabled=1
++baseurl=http://192.168.0.35/amzn-buildroot-wip/amzn-updates
++failovermethod=priority
++"""
++
++config_opts['macros']['%packager'] = 'Lambda Linux BuildSystem <https://lambda-linux.io/>'
++config_opts['macros']['%dist'] = '.ll1'
++config_opts['macros']['%vendor']= 'Lambda Linux Project'
+-- 
+1.7.1
+

@@ -31,6 +31,10 @@ BuildRequires: python-devel, autoconf, automake
 BuildRequires: bash-completion
 %endif
 
+# Lambda Linux patches
+Patch1001: 1001-Add-support-for-Lambda-Linux-WIP.patch
+Patch1002: 1002-Add-support-for-Amazon-Linux.patch
+
 %description
 For package support, please visit
 https://github.com/lambda-linux-pkgs/%{name}/issues
@@ -50,6 +54,10 @@ Mock SCM integration module.
 
 %prep
 %setup -q
+
+# Lambda Linux patches
+%patch1001 -p1
+%patch1002 -p1
 
 %build
 autoreconf -vif
