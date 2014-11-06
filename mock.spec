@@ -184,6 +184,14 @@ fi
 %{python_sitelib}/mockbuild/scm.py*
 
 %changelog
+* Thu Nov 06 2014 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
+- Adapt for AL/LL
+- Add `ec2-user` to `mock` group
+- Add `update-alternatives` support
+- Add patches
+- Add package support URL
+- Import source package EPEL6/mock-1.1.41-1.el6
+
 * Fri Jul 18 2014 Clark Williams <williams@redhat.com> - 1.1.41-1
 - fix python 2.7 feature so we can run on rhel6
 
