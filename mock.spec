@@ -106,8 +106,9 @@ fi
 
 %pre
 
-# check for existence of mock group, create it if not found
-getent group mock > /dev/null || groupadd -f -g %mockgid -r mock
+# check for existence of mock group, create it if not found and add
+# `ec2-user` to mock group
+getent group mock > /dev/null || (groupadd -f -g %mockgid -r mock && usermod -a -G mock ec2-user)
 exit 0
 
 %post
