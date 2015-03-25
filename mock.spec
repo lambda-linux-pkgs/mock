@@ -8,7 +8,7 @@
 %define release_name mock
 %define release_version %{major}.%{minor}.%{sub}%{extralevel}
 
-%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?python27_sitelib: %define python27_sitelib %(%{__python27} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 # mock group id allocate for Fedora
 %global mockgid  135
@@ -22,15 +22,15 @@ Group: Development/Tools
 Source: https://git.fedorahosted.org/cgit/mock.git/snapshot/%{name}-%{version}.tar.xz
 URL: http://fedoraproject.org/wiki/Projects/Mock
 BuildArch: noarch
-Requires: python >= 2.6, yum >= 2.4, tar, pigz, python-ctypes, python-decoratortools, usermode
+Requires: python27, yum >= 3.4, tar, pigz, python27-libs, python27-decoratortools, usermode
 Requires: yum-utils
 Requires: createrepo_c
-Requires: pyliblzma
+Requires: python27-pyliblzma
 Requires(pre): shadow-utils
 Requires(post): coreutils
 Requires(post): %{_sbindir}/update-alternatives
 Requires(preun): %{_sbindir}/update-alternatives
-BuildRequires: python-devel, autoconf, automake
+BuildRequires: python27-devel, autoconf, automake
 
 # bash-completion package is not yet available in AL/LL
 %if 0%{?fedora} || 0%{?rhel} > 6
@@ -156,8 +156,8 @@ fi
 %attr(0755, root, root) %{_sbindir}/mock
 
 # python stuff
-%{python_sitelib}/*
-%exclude %{python_sitelib}/mockbuild/scm.*
+%{python27_sitelib}/*
+%exclude %{python27_sitelib}/mockbuild/scm.*
 
 # config files
 %dir  %{_sysconfdir}/%{name}
@@ -181,7 +181,7 @@ fi
 %dir /var/lib/mock
 
 %files scm
-%{python_sitelib}/mockbuild/scm.py*
+%{python27_sitelib}/mockbuild/scm.py*
 
 %changelog
 * Thu Nov 06 2014 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
