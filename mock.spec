@@ -184,6 +184,10 @@ fi
 %{python27_sitelib}/mockbuild/scm.py*
 
 %changelog
+* Thu Mar 26 2015 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
+- Bump `_buildid`
+- Update to python27
+
 * Thu Nov 06 2014 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
 - Adapt for AL/LL
 - Add `ec2-user` to `mock` group
