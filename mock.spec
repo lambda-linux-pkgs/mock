@@ -192,8 +192,10 @@ fi
 %{python27_sitelib}/mockbuild/scm.py*
 
 %changelog
+* Fri Apr 03 2015 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
+- Add support for `ll-user`
+
 * Thu Mar 26 2015 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
-- Bump `_buildid`
 - Update to python27
 
 * Thu Nov 06 2014 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
