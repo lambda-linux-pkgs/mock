@@ -194,6 +194,10 @@ fi
 %{python27_sitelib}/mockbuild/scm.py*
 
 %changelog
+* Wed May 11 2016 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
+- Update spec file for `1003-Allow-external-mock-hooks.patch`
+- Add `1003-Allow-external-mock-hooks.patch`
+
 * Fri Apr 03 2015 Rajiv M Ranganath <rajiv.ranganath@atihita.com>
 - Add support for `ll-user`
 
