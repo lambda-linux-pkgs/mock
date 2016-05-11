@@ -1,4 +1,4 @@
-%define _buildid .3
+%define _buildid .4
 
 # next four lines substituted by autoconf
 %define major 1
