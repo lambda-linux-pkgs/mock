@@ -1,0 +1,41 @@
+From 14b214fbf152a065a0b05de5f9797b6e68b2dedb Mon Sep 17 00:00:00 2001
+From: Rajiv M Ranganath <rajiv.ranganath@atihita.com>
+Date: Wed, 11 May 2016 10:47:27 +0000
+Subject: [PATCH 1003/1003] Allow external mock hooks
+
+---
+ py/mockbuild/backend.py | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/py/mockbuild/backend.py b/py/mockbuild/backend.py
+index 3e49fe0..74d6815 100644
+--- a/py/mockbuild/backend.py
++++ b/py/mockbuild/backend.py
+@@ -1022,7 +1022,7 @@ class Root(object):
+         dets = { 'uid': str(self.chrootuid), 'gid': str(self.chrootgid), 'user': self.chrootuser, 'group': self.chrootgroup, 'home': self.homedir }
+ 
+         # ok for these two to fail
+-        self.doChroot(['/usr/sbin/userdel', '-r', '-f', dets['user']], shell=False, raiseExc=False)
++        self.doChroot(['/usr/sbin/userdel', dets['user']], shell=False, raiseExc=False)
+         self.doChroot(['/usr/sbin/groupdel', dets['group']], shell=False, raiseExc=False)
+ 
+         self.doChroot(['/usr/sbin/groupadd', '-g', dets['gid'], dets['group']], shell=False)
+@@ -1096,10 +1096,11 @@ class Root(object):
+ 
+             # rpmmacros default
+             macrofile_out = self.makeChrootPath(self.homedir, ".rpmmacros")
+-            rpmmacros = open(macrofile_out, 'w+')
+-            for key, value in self.macros.items():
+-                rpmmacros.write( "%s %s\n" % (key, value) )
+-            rpmmacros.close()
++            if not os.path.exists(macrofile_out):
++                rpmmacros = open(macrofile_out, 'w+')
++                for key, value in self.macros.items():
++                    rpmmacros.write( "%s %s\n" % (key, value) )
++                rpmmacros.close()
+ 
+         finally:
+             self.uidManager.restorePrivs()
+-- 
+2.7.4
+
