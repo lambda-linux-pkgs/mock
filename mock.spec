@@ -40,6 +40,7 @@ BuildRequires: bash-completion
 # Lambda Linux patches
 Patch1001: 1001-Add-support-for-Lambda-Linux-WIP.patch
 Patch1002: 1002-Add-support-for-Amazon-Linux.patch
+Patch1003: 1003-Allow-external-mock-hooks.patch
 
 %description
 For package support, please visit
@@ -64,6 +65,7 @@ Mock SCM integration module.
 # Lambda Linux patches
 %patch1001 -p1
 %patch1002 -p1
+%patch1003 -p1
 
 %build
 autoreconf -vif
